@@ -1,0 +1,142 @@
+
+-----------------------------------------
+Converter Menu
+1. Currency Converter
+2. Distance Converter
+3. Time Converter
+4. Exit
+Enter your choice: 
+Currency Conversion Options:
+1. Dollar to INR
+2. INR to Dollar
+3. Euro to INR
+4. INR to Euro
+5. Yen to INR
+6. INR to Yen
+Enter option: Enter amount: Result: 1.3373493975903614
+
+-----------------------------------------
+Converter Menu
+1. Currency Converter
+2. Distance Converter
+3. Time Converter
+4. Exit
+Enter your choice: Exited.
+
+-----------------------------------------
+Converter Menu
+1. Currency Converter
+2. Distance Converter
+3. Time Converter
+4. Exit
+Enter your choice: 
+Currency Conversion Options:
+1. Dollar to INR
+2. INR to Dollar
+3. Euro to INR
+4. INR to Euro
+5. Yen to INR
+6. INR to Yen
+Enter option: 1
+Enter amount: 1.0
+Result: 83.0
+
+-----------------------------------------
+Converter Menu
+1. Currency Converter
+2. Distance Converter
+3. Time Converter
+4. Exit
+Enter your choice: Exited.
+
+-----------------------------------------
+Converter Menu
+1. Currency Converter
+2. Distance Converter
+3. Time Converter
+4. Exit
+Enter your choice: Exited.
+
+-----------------------------------------
+Converter Menu
+1. Currency Converter
+2. Distance Converter
+3. Time Converter
+4. Exit
+Enter your choice: 
+Currency Conversion Options:
+1. Dollar to INR
+2. INR to Dollar
+3. Euro to INR
+4. INR to Euro
+5. Yen to INR
+6. INR to Yen
+Enter option: 2
+Enter amount: 3.0
+Result: 0.03614457831325301
+
+-----------------------------------------
+Converter Menu
+1. Currency Converter
+2. Distance Converter
+3. Time Converter
+4. Exit
+Enter your choice: 
+Distance Conversion Options:
+1. Meter to KM
+2. KM to Meter
+3. Miles to KM
+4. KM to Miles
+Enter option: 3
+Enter distance: 4.0
+Result: 6.43736
+
+-----------------------------------------
+Converter Menu
+1. Currency Converter
+2. Distance Converter
+3. Time Converter
+4. Exit
+Enter your choice: Exited.
+
+-----------------------------------------
+Converter Menu
+1. Currency Converter
+2. Distance Converter
+3. Time Converter
+4. Exit
+Enter your choice: 
+Currency Conversion Options:
+1. Dollar to INR
+2. INR to Dollar
+3. Euro to INR
+4. INR to Euro
+5. Yen to INR
+6. INR to Yen
+Enter option: 2
+Enter amount: 5.0
+Result: 0.060240963855421686
+
+-----------------------------------------
+Converter Menu
+1. Currency Converter
+2. Distance Converter
+3. Time Converter
+4. Exit
+Enter your choice: 
+Time Conversion Options:
+1. Hours to Minutes
+2. Minutes to Hours
+3. Hours to Seconds
+4. Seconds to Hours
+Enter option: 4
+Enter time: 3600.0
+Result: 1.0
+
+-----------------------------------------
+Converter Menu
+1. Currency Converter
+2. Distance Converter
+3. Time Converter
+4. Exit
+Enter your choice: Exited.

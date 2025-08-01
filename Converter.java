@@ -2,52 +2,27 @@ import CurrencyConverter.CurrencyConverter;
 import DistanceConverter.DistanceConverter;
 import TimeConverter.TimeConverter;
 
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
+
+import java.io.*;
 import java.util.Scanner;
-import java.io.IOException;
+
 
 public class Converter {
     
-    static class TeePrintStream extends PrintStream {
-        private final PrintStream original;
+    public static void main(String[] args) throws IOException {
 
-        public TeePrintStream(OutputStream out, PrintStream original) {
-            super(out, true); // autoflush
-            this.original = original;
-        }
-
-        @Override
-        public void write(byte[] buf, int off, int len) {
-            try {
-                super.write(buf, off, len);      // log file
-                original.write(buf, off, len);   // terminal
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        public void flush() {
-            super.flush();
-            original.flush();
-        }
-    }
-
-
-    public static void main(String[] args) {
-
+        FileWriter fw = new FileWriter("log.txt", true); // append mode
+        PrintWriter logWriter = new PrintWriter(fw, true);
         PrintStream originalOut = System.out;
-        TeePrintStream tee = null;
 
-        try {
-            FileOutputStream fos = new FileOutputStream("log.txt", true); // append mode
-            tee = new TeePrintStream(fos, originalOut);
-            System.setOut(tee); // redirect System.out to both console and log file
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // Redirect output to both console and log file
+        PrintStream logOut = new PrintStream(new OutputStream() {
+            public void write(int b) {
+                originalOut.write(b);
+                logWriter.write(b);
+            }
+        });
+        System.setOut(logOut);
 
         Scanner sc = new Scanner(System.in);
 
@@ -79,9 +54,13 @@ public class Converter {
                     System.out.println("5. Yen to INR");
                     System.out.println("6. INR to Yen");
                     System.out.print("Enter option: ");
+                    System.out.flush();
                     int c = sc.nextInt();
+                    logWriter.println(c);
                     System.out.print("Enter amount: ");
+                    System.out.flush();
                     double amount = sc.nextDouble();
+                    logWriter.println(amount);
 
                     switch (c) {
 
@@ -122,9 +101,13 @@ public class Converter {
                     System.out.println("3. Miles to KM");
                     System.out.println("4. KM to Miles");
                     System.out.print("Enter option: ");
+                    System.out.flush();
                     int d = sc.nextInt();
+                    logWriter.println(d);
                     System.out.print("Enter distance: ");
+                    System.out.flush();
                     double dist = sc.nextDouble();
+                    logWriter.println(dist);
 
                     switch (d) {
                         case 1: 
@@ -155,9 +138,13 @@ public class Converter {
                     System.out.println("3. Hours to Seconds");
                     System.out.println("4. Seconds to Hours");
                     System.out.print("Enter option: ");
+                    System.out.flush();
                     int t = sc.nextInt();
+                    logWriter.println(t);
                     System.out.print("Enter time: ");
+                    System.out.flush();
                     double time_ = sc.nextDouble();
+                    logWriter.println(time_);
 
                     switch (t) {
                         case 1: 
@@ -188,11 +175,7 @@ public class Converter {
         
         }
         System.out.println("Exited.");
-
-        if (tee != null) {
-            tee.flush();
-            tee.close();
-        }
         sc.close();
+        logWriter.close();
     }
 }
