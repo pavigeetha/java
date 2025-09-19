@@ -35,11 +35,11 @@ public class AdvancedArrayListOps {
         return false;
     }
 
-    public ArrayList<String> startingWith(String prefix) {
+    public ArrayList<String> startingWith(String c) {
 
         ArrayList<String> result = new ArrayList<>();
         for (String s : list) {
-            if (s.toLowerCase().startsWith(prefix.toLowerCase())) {
+            if (s.toLowerCase().startsWith(c.toLowerCase())) {
                 result.add(s);
             }
         }
@@ -55,19 +55,7 @@ public class AdvancedArrayListOps {
         Collections.sort(list, Collections.reverseOrder());
     }
 
-    public ArrayList<String> regexSearch(String regex) {
-
-        ArrayList<String> matches = new ArrayList<>();
-        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-        for (String s : list) {
-            Matcher matcher = pattern.matcher(s);
-            if (matcher.find()) {
-                matches.add(s);
-            }
-        }
-        return matches;
-    }
-
+    
     public void removeDuplicates() {
 
         LinkedHashSet<String> set = new LinkedHashSet<>(list);
@@ -85,6 +73,20 @@ public class AdvancedArrayListOps {
         }
         return matches;
     }
+    
+    public ArrayList<String> regexSearch(String regex) {
+
+        ArrayList<String> matches = new ArrayList<>();
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        for (String s : list) {
+            Matcher matcher = pattern.matcher(s);
+            if (matcher.find()) {
+                matches.add(s);
+            }
+        }
+        return matches;
+    }
+
 
     public void sortByLength() {
         list.sort(Comparator.comparingInt(String::length));
@@ -111,44 +113,105 @@ public class AdvancedArrayListOps {
         ops.display();
         System.out.print("\n");
 
-        System.out.print("Enter string to insert: ");
-        String str = sc.nextLine();
-        System.out.print("Enter index: ");
-        int idx = sc.nextInt();
-        sc.nextLine();
-        ops.insert(idx, str);
-        ops.display();
-        System.out.print("\n");
+        int stop = 0;
+        int choice = 0;
+        String str ;
 
-        System.out.print("Enter substring for partial search: ");
-        String substr = sc.nextLine();
-        System.out.println("Matches: " + ops.partialMatch(substr));
-        System.out.print("\n");
+        while (stop == 0){
+            System.out.println("The Menu\n 1. Append a string\n 2. Insert a new string\n 3. Search for a string\n 4. Words starting with a letter\n 5. Sort in ascending order\n 6. Sort in descending order\n 7. Partial search\n 8. Regex Search\n 9. Sort based on length\n 10. Exit");
+            System.out.print("Enter choice: ");
+            choice = sc.nextInt();
 
-        System.out.print("Enter regex for search: ");
-        String regex = sc.nextLine();
-        System.out.println("Regex matches: " + ops.regexSearch(regex));
-        System.out.print("\n");
+            switch (choice) {
 
-        System.out.print("Enter starting text: ");
-        String prefix = sc.nextLine();
-        System.out.println("Starting with '" + prefix + "': " + ops.startingWith(prefix));
-        System.out.print("\n");
+                case 1:
+                    System.out.print("Enter string to append: ");
+                    str = sc.next();
+                    ops.append(str);
+                    ops.display();
+                    System.out.print("\n");
+                    break;
 
-        System.out.print("Sorting in ascending order: ");
-        ops.sortAscending();
-        ops.display();
-        System.out.print("\n");
+                case 2:
 
-        System.out.print("Sorting in descending order: ");
-        ops.sortDescending();
-        ops.display();
-        System.out.print("\n");
+                    System.out.print("Enter string to insert: ");
+                    str = sc.next();
+                    System.out.print("Enter index: ");
+                    int idx = sc.nextInt();
+                    sc.nextLine();
+                    ops.insert(idx, str);
+                    ops.removeDuplicates();
+                    ops.display();
+                    System.out.print("\n");
+                    break;
+                
+                case 3:
 
-        System.out.print("Sort by length: ");
-        ops.sortByLength();
-        ops.display();
-        System.out.print("\n");
+                    System.out.print("Enter string for linear search: ");
+                    str = sc.next();
+                    if (ops.search(str)){
+                        System.out.println("The string is present in the list");
+                    }
+                    else{
+                        System.out.println("The string is not present in the list");
+                    }
+                    System.out.print("\n");
+                    break;
+
+                case 4:
+
+                    System.out.print("Enter starting letter: ");
+                    String c = sc.next();
+                    System.out.println("Starting with '" + c + "': " + ops.startingWith(c));
+                    System.out.print("\n");
+                    break;
+
+                case 5:
+
+                    System.out.print("Sorting in ascending order: ");
+                    ops.sortAscending();
+                    ops.display();
+                    System.out.print("\n");
+                    break;
+
+                case 6:
+                    
+                    System.out.print("Sorting in descending order: ");
+                    ops.sortDescending();
+                    ops.display();
+                    System.out.print("\n");
+                    break;
+
+                case 7:
+                    System.out.print("Enter substring for partial search: ");
+                    String substr = sc.next();
+                    System.out.println("Words with the given substring: " + ops.partialMatch(substr));
+                    System.out.print("\n");
+                    break;
+                
+                case 8:
+                    System.out.print("Enter regex for search: ");
+                    String regex = sc.next();
+                    System.out.println("Regex matches: " + ops.regexSearch(regex));
+                    System.out.print("\n");
+                    break;
+
+                case 9:
+                    System.out.print("Sort by length: ");
+                    ops.sortByLength();
+                    ops.display();
+                    System.out.print("\n");
+                    break;
+
+                case 10:
+                    stop = 1;
+                    System.out.println("Exiting the program!");
+                    break;
+
+                default:
+                    break;
+            }
+        }
 
         sc.close();
     }
