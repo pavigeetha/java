@@ -1,3 +1,6 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 abstract class Shape {
@@ -10,9 +13,9 @@ abstract class Shape {
 
     public abstract double area();
 
-    public final void displayInfo(String shapeName) {
-        System.out.println("Shape: "+shapeName);
-        System.out.println("Area: "+area());
+    public final void displayInfo(String shapeName, PrintWriter log) {
+        System.out.println("Shape: "+shapeName+"\nArea: " + area());
+        log.println("Shape: "+shapeName+"\nArea: " + area());
     }
 }
 
@@ -78,7 +81,6 @@ class Circle extends Shape implements Colorable {
     }
 }
 
-
 class InvalidSalaryException extends Exception {
     public InvalidSalaryException(String message) {
         super(message);
@@ -90,7 +92,7 @@ class Employee {
 
     public Employee(double baseSalary) throws InvalidSalaryException {
         if (baseSalary < 0)
-            throw new InvalidSalaryException("Base salary cannot be negative!");
+            throw new InvalidSalaryException("Base salary cannot be negative");
         this.baseSalary = baseSalary;
     }
 
@@ -116,26 +118,18 @@ class Manager extends Employee {
     }
 }
 
-// ===============================
-// Part 3: Method Overloading with Varargs
-// ===============================
-
 class MathOperations {
 
-    // 2 integers
-    public int sum(int a, int b) {
-        System.out.println("sum(int, int) called");
+    public int sum(int a, int b, PrintWriter log) {
+        System.out.println("Sum(int,int) is called");
         return a + b;
     }
-
-    // 3 doubles
-    public double sum(double a, double b, double c) {
-        System.out.println("sum(double, double, double) called");
+    public double sum(double a, double b, double c,PrintWriter log) {
+        System.out.println("sum(double, double, double) is called");
         return a + b + c;
     }
 
-    // Variable number of integers
-    public int sum(int... nums) {
+    public int sum(PrintWriter log,int... nums) {
         System.out.println("sum(int...) called");
         int total = 0;
         for (int n : nums) total += n;
@@ -143,54 +137,110 @@ class MathOperations {
     }
 }
 
+
 public class Shapes {
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws IOException {
         Scanner sc = new Scanner(System.in);
         Random rand = new Random();
         String[] colors = {"Red", "Green", "Blue", "Yellow", "Orange"};
         Shape[] shapes = new Shape[3];
 
+        FileWriter fw = new FileWriter("shapes.txt", true);
+        PrintWriter log = new PrintWriter(fw, true);
+
         try {
 
-            System.out.print("Enter length and breadth of rectangle: ");
+            System.out.print("\nEnter length of the rectangle: ");
             double l = sc.nextDouble();
+            System.out.print("Enter breadth of the rectangle: ");
             double b = sc.nextDouble();
-            validateInput(l, b);
+            log.println("\nEnter length of the rectangle: "+l+"\nEnter breadth of the rectangle: "+b);
+            
+            if (l<=0 || b<=0){
+                throw new IllegalArgumentException("Dimensions must be positive numbers");
+            }
+
             shapes[0] = new Rectangle(l, b, colors[rand.nextInt(colors.length)]);
 
-            System.out.print("Enter base and height of triangle: ");
-            double base = sc.nextDouble();
-            double h = sc.nextDouble();
-            validateInput(base, h);
-            shapes[1] = new Triangle(base, h, colors[rand.nextInt(colors.length)]);
 
-            System.out.print("Enter radius of circle: ");
+
+            System.out.print("\nEnter base of the triangle: ");
+            double bs = sc.nextDouble();
+            System.out.print("Enter height of the triangle: ");
+            double h = sc.nextDouble();
+            log.println("\nEnter base of the triangle: "+bs+"\nEnter height of the triangle: "+b);
+
+            if (bs<=0 || h<=0){
+                throw new IllegalArgumentException("Dimensions must be positive numbers");
+            }
+            
+
+            shapes[1] = new Triangle(bs, h, colors[rand.nextInt(colors.length)]);
+
+
+
+            System.out.print("\nEnter radius of circle: ");
             double r = sc.nextDouble();
-            validateInput(r);
+            log.println("\nEnter radius of circle: "+r);
+
+            if (r<=0){
+                throw new IllegalArgumentException("Radius must be positive");
+            }
+            
             shapes[2] = new Circle(r, colors[rand.nextInt(colors.length)]);
 
-            System.out.println("\n--- Shape Information ---");
+
+            System.out.println("\n--- Shape Information ---\n");
+            log.println("\n--- Shape Information ---\n");
             for (Shape s : shapes) {
-                s.displayInfo(s.getClass().getSimpleName());
-                if (s instanceof Colorable)
-                    System.out.println(((Colorable) s).colorDescription());
-                System.out.println();
+                s.displayInfo(s.getClass().getSimpleName(),log);
+                String desc = ((Colorable) s).colorDescription();
+                System.out.println(desc);
+                log.println(desc);
+                System.out.print("\n");
+
             }
+            System.out.print("\n");
+
+
+            System.out.print("\nEnter base salary of employee: ");
+            double e_bs = sc.nextDouble();
+            log.println("\nEnter base salary of employee: "+e_bs);
+
+            System.out.print("\nEnter base salary of Manager: ");
+            double m_bs = sc.nextDouble();
+            log.println("\nEnter base salary of Manager: "+m_bs);
+
+            System.out.print("\nEnter Manager bonus: ");
+            double m_bonus = sc.nextDouble();
+            log.println("\nEnter Manager bonus: "+m_bonus);
+
+            Employee emp = new Employee(e_bs);
+            Manager mgr = new Manager(m_bs, m_bonus);
+
+            System.out.println("Employee salary: " + emp.calculateSalary());
+            log.println("Employee salary: " + emp.calculateSalary());
+            System.out.println("Manager salary: " + mgr.calculateSalary());
+            log.println("Manager salary: " + mgr.calculateSalary());
 
         } catch (InputMismatchException e) {
             System.out.println("Invalid input type");
+            log.println("Invalid input type");
+
+
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
-        }
+            log.println("Error: " + e.getMessage());
+
+
+        }catch (InvalidSalaryException e) {
+            System.out.println("Error: " + e.getMessage());
+            log.println("Error: " + e.getMessage());
 
         sc.close();
     }
 
-    private static void validateInput(double... nums) {
-        for (double n : nums) {
-            if (n <= 0)
-                throw new IllegalArgumentException("Dimensions must be positive numbers");
-        }
-    }
 
+}
 }
