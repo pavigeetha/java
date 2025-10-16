@@ -201,8 +201,6 @@ public class Shapes {
                 System.out.print("\n");
 
             }
-            System.out.print("\n");
-
 
             System.out.print("\nEnter base salary of employee: ");
             double e_bs = sc.nextDouble();
@@ -223,6 +221,46 @@ public class Shapes {
             log.println("Employee salary: " + emp.calculateSalary());
             System.out.println("Manager salary: " + mgr.calculateSalary());
             log.println("Manager salary: " + mgr.calculateSalary());
+
+            MathOperations mo = new MathOperations();
+            System.out.print("\nEnter how many numbers you want to sum: ");
+            int count = sc.nextInt();
+            log.println("\nEnter how many numbers you want to sum: " + count);
+
+            if (count == 2) {
+                System.out.print("Enter two integers: ");
+                int a = sc.nextInt();
+                int a1 = sc.nextInt();
+                int result = mo.sum(a, a1, log);
+                log.println("Enter two integers: "+a+" "+a1);
+                System.out.println("Sum = " + result);
+                log.println("Sum = " + result);
+            } else if (count == 3) {
+                System.out.print("Enter three doubles: ");
+                double x = sc.nextDouble();
+                double y = sc.nextDouble();
+                double z = sc.nextDouble();
+                log.println("Enter 3 doubles: "+x+" "+y+" "+z);
+                double result = mo.sum(x, y, z, log);
+                System.out.println("Sum = " + result);
+                log.println("Sum = " + result);
+            } else if (count > 3) {
+                int[] nums = new int[count];
+                System.out.println("Enter " + count + " integers:");
+                log.println("Enter " + count + " integers:");
+                for (int i = 0; i < count; i++) {
+                    nums[i] = sc.nextInt();
+                    log.print(nums[i]+" ");
+                }
+                log.print("\n");
+                int result = mo.sum(log, nums);
+                System.out.println("Sum = " + result);
+                log.println("Sum = " + result);
+            } else {
+                System.out.println("Invalid count for sum operation.");
+                log.println("Invalid count for sum operation.");
+            }
+
 
         } catch (InputMismatchException e) {
             System.out.println("Invalid input type");
