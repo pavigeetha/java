@@ -122,15 +122,18 @@ class MathOperations {
 
     public int sum(int a, int b, PrintWriter log) {
         System.out.println("Sum(int,int) is called");
+        log.println("Sum(int,int) is called");
         return a + b;
     }
     public double sum(double a, double b, double c,PrintWriter log) {
         System.out.println("sum(double, double, double) is called");
+        log.println("Sum(double, double, double) is called");
         return a + b + c;
     }
 
     public int sum(PrintWriter log,int... nums) {
         System.out.println("sum(int...) called");
+        log.println("Sum(int...) is called");
         int total = 0;
         for (int n : nums) total += n;
         return total;
@@ -141,6 +144,8 @@ class MathOperations {
 public class Shapes {
 
     public static void main(String[] args) throws IOException {
+
+        
         Scanner sc = new Scanner(System.in);
         Random rand = new Random();
         String[] colors = {"Red", "Green", "Blue", "Yellow", "Orange"};
@@ -148,6 +153,9 @@ public class Shapes {
 
         FileWriter fw = new FileWriter("shapes.txt", true);
         PrintWriter log = new PrintWriter(fw, true);
+
+        System.out.println("---------------------------");
+        log.println("---------------------------");
 
         try {
 
@@ -175,10 +183,7 @@ public class Shapes {
                 throw new IllegalArgumentException("Dimensions must be positive numbers");
             }
             
-
             shapes[1] = new Triangle(bs, h, colors[rand.nextInt(colors.length)]);
-
-
 
             System.out.print("\nEnter radius of circle: ");
             double r = sc.nextDouble();
@@ -202,25 +207,33 @@ public class Shapes {
 
             }
 
+
+
+
+
             System.out.print("\nEnter base salary of employee: ");
             double e_bs = sc.nextDouble();
-            log.println("\nEnter base salary of employee: "+e_bs);
-
-            System.out.print("\nEnter base salary of Manager: ");
-            double m_bs = sc.nextDouble();
-            log.println("\nEnter base salary of Manager: "+m_bs);
-
-            System.out.print("\nEnter Manager bonus: ");
-            double m_bonus = sc.nextDouble();
-            log.println("\nEnter Manager bonus: "+m_bonus);
-
+            log.println("Enter base salary of employee: "+e_bs);
             Employee emp = new Employee(e_bs);
+
+            System.out.print("Enter base salary of Manager: ");
+            double m_bs = sc.nextDouble();
+            log.println("Enter base salary of Manager: "+m_bs);
+
+            System.out.print("Enter Manager bonus: ");
+            double m_bonus = sc.nextDouble();
+            log.println("Enter Manager bonus: "+m_bonus);
+            
             Manager mgr = new Manager(m_bs, m_bonus);
 
-            System.out.println("Employee salary: " + emp.calculateSalary());
+            System.out.println("\nEmployee salary: " + emp.calculateSalary());
             log.println("Employee salary: " + emp.calculateSalary());
             System.out.println("Manager salary: " + mgr.calculateSalary());
             log.println("Manager salary: " + mgr.calculateSalary());
+
+
+
+
 
             MathOperations mo = new MathOperations();
             System.out.print("\nEnter how many numbers you want to sum: ");
@@ -228,19 +241,19 @@ public class Shapes {
             log.println("\nEnter how many numbers you want to sum: " + count);
 
             if (count == 2) {
-                System.out.print("Enter two integers: ");
+                System.out.print("Enter numbers: ");
                 int a = sc.nextInt();
                 int a1 = sc.nextInt();
                 int result = mo.sum(a, a1, log);
-                log.println("Enter two integers: "+a+" "+a1);
+                log.println("Enter numbers: "+a+" "+a1);
                 System.out.println("Sum = " + result);
                 log.println("Sum = " + result);
             } else if (count == 3) {
-                System.out.print("Enter three doubles: ");
+                System.out.print("Enter numbers: ");
                 double x = sc.nextDouble();
                 double y = sc.nextDouble();
                 double z = sc.nextDouble();
-                log.println("Enter 3 doubles: "+x+" "+y+" "+z);
+                log.println("Enter numbers: "+x+" "+y+" "+z);
                 double result = mo.sum(x, y, z, log);
                 System.out.println("Sum = " + result);
                 log.println("Sum = " + result);
@@ -262,6 +275,9 @@ public class Shapes {
             }
 
 
+
+
+
         } catch (InputMismatchException e) {
             System.out.println("Invalid input type");
             log.println("Invalid input type");
@@ -275,6 +291,9 @@ public class Shapes {
         }catch (InvalidSalaryException e) {
             System.out.println("Error: " + e.getMessage());
             log.println("Error: " + e.getMessage());
+
+        System.out.println("---------------------------");
+        log.println("---------------------------");
 
         sc.close();
     }
